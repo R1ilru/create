@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -11,30 +12,62 @@ public class PlayerMove : MonoBehaviour
     public float gravityScale = 0.5f;
     public bool isGrounded;
 
+    [Header("Death")]
+    public float fallLimit = 5f;   // これ以上落ちたら死ぬ
+    float maxHeightY;
+
+    bool isDead = false;
+
+
     Rigidbody rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
+
+        maxHeightY = transform.position.y;
     }
 
     void Update()
     {
+        if (isDead)
+        {
+            // ★ 死亡後 Enter でリザルト
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                SceneManager.LoadScene("SceneResult");
+            }
+            return;
+        }
+
+        // ジャンプ
         if (Input.GetKeyDown(KeyCode.Space) && Mathf.Abs(rb.velocity.y) < 0.1f)
         {
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
+
+        // 最高到達高度更新
+        if (transform.position.y > maxHeightY)
+        {
+            maxHeightY = transform.position.y;
+        }
+
+        // 落下死亡判定
+        if (transform.position.y < maxHeightY - fallLimit)
+        {
+            Die();
+        }
     }
 
     void FixedUpdate()
     {
-        // 横移動
+        if (isDead) return;
+
         float h = Input.GetAxis("Horizontal");
         rb.velocity = new Vector3(h * speed, rb.velocity.y, rb.velocity.z);
 
-        // ふわふわ重力
         rb.AddForce(Physics.gravity * gravityScale, ForceMode.Acceleration);
 
         if (isGrounded && rb.velocity.y < 0)
@@ -66,4 +99,37 @@ public class PlayerMove : MonoBehaviour
             isGrounded = false;
         }
     }
+
+
+
+    void Die()
+    {
+        if (isDead) return;
+
+        isDead = true;
+
+        // ★ 高度スコア保存
+        GameData.maxHeight = maxHeightY;
+
+        rb.velocity = Vector3.zero;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
