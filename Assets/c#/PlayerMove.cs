@@ -16,6 +16,10 @@ public class PlayerMove : MonoBehaviour
     public float fallLimit = 5f;   // Ç±ÇÍà»è„óéÇøÇΩÇÁéÄÇ 
     float maxHeightY;
 
+    [Header("Warp")]
+    public float leftLimitX = -5f;
+    public float rightLimitX = 5f;
+
     bool isDead = false;
 
 
@@ -114,7 +118,21 @@ public class PlayerMove : MonoBehaviour
         rb.velocity = Vector3.zero;
     }
 
+    void LateUpdate()
+    {
+        Vector3 pos = transform.position;
 
+        if (pos.x < leftLimitX)
+        {
+            pos.x = rightLimitX;
+        }
+        else if (pos.x > rightLimitX)
+        {
+            pos.x = leftLimitX;
+        }
+
+        transform.position = pos;
+    }
 
 
 
