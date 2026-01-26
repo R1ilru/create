@@ -9,6 +9,6 @@ public class ResultUI : MonoBehaviour
 
     void Start()
     {
-        heightText.text = "HEIGHT : " + GameData.maxHeight.ToString("F1");
+        heightText.text = $"HEIGHT : {(int)GameData.maxHeight}";
     }
 }

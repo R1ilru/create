@@ -74,4 +74,12 @@ public class StageGenerator : MonoBehaviour
             return normalPlatforms[index];
         }
     }
+
+
+    
+
+
+
+
+
 }
