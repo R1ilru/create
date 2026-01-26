@@ -9,24 +9,26 @@ public class CameraFollow : MonoBehaviour
     public float smooth = 3f;
 
     float maxY;
+    float fixedX;
 
     void Start()
     {
         maxY = transform.position.y;
+        fixedX = transform.position.x; // Åö èâä˙XÇå≈íË
     }
 
     void LateUpdate()
     {
         float targetY = player.position.y + offsetY;
 
-        // Åö â∫Ç…ñﬂÇÁÇ»Ç¢
+        // â∫Ç…ñﬂÇÁÇ»Ç¢
         if (targetY > maxY)
         {
             maxY = targetY;
         }
 
         Vector3 targetPos = new Vector3(
-            player.position.x,
+            fixedX,          // Åö ç∂âEÇÕå≈íË
             maxY,
             transform.position.z
         );
