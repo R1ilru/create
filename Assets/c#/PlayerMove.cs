@@ -46,8 +46,9 @@ public class PlayerMove : MonoBehaviour
         }
 
         // ジャンプ
-        if (Input.GetKeyDown(KeyCode.Space) && Mathf.Abs(rb.velocity.y) < 0.1f)
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
+            isGrounded = false; // 連続ジャンプ防止
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
@@ -96,10 +97,25 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
+
+
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            transform.SetParent(collision.transform);
+        }
+    }
+
+
+
+
     void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
+            transform.SetParent(null);
             isGrounded = false;
         }
     }
