@@ -619,6 +619,8 @@ MonoBehaviour:
   - {fileID: 7379756028985843637, guid: 3e541763846e1db488253e876b1f014b, type: 3}
   - {fileID: 7878118077932643552, guid: 7a441b07b732e5043b01a12b575fbb7d, type: 3}
   - {fileID: 115615379924449030, guid: 51f8595c33b723f4e9b82c5f74a5146f, type: 3}
+  - {fileID: 5911500152202908884, guid: a3b834517d365b640a891e4157f9a2ec, type: 3}
+  - {fileID: 7706694223649826146, guid: a6aa91ddd1bf7e848ba281555d376f30, type: 3}
   player: {fileID: 267946299}
   spawnIntervalY: 3
   spawnRangeX: 5

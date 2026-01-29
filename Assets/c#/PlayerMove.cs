@@ -35,15 +35,6 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
-        if (isDead)
-        {
-            // ★ 死亡後 Enter でリザルト
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                SceneManager.LoadScene("SceneResult");
-            }
-            return;
-        }
 
         // ジャンプ
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
@@ -121,6 +112,12 @@ public class PlayerMove : MonoBehaviour
     }
 
 
+    IEnumerator GoResult()
+    {
+        yield return new WaitForSeconds(1.0f); // 1秒待つ
+        SceneManager.LoadScene("SceneResult");
+    }
+
 
     void Die()
     {
@@ -128,10 +125,11 @@ public class PlayerMove : MonoBehaviour
 
         isDead = true;
 
-        // ★ 高度スコア保存
         GameData.maxHeight = maxHeightY;
 
         rb.velocity = Vector3.zero;
+
+        StartCoroutine(GoResult());
     }
 
     void LateUpdate()

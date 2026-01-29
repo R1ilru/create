@@ -9,6 +9,6 @@ public class ResultUI : MonoBehaviour
 
     void Start()
     {
-        heightText.text = $"HEIGHT : {(int)GameData.maxHeight}";
+        heightText.text = $"SCORE : {(int)GameData.maxHeight}";
     }
 }

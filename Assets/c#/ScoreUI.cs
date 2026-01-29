@@ -22,6 +22,6 @@ public class ScoreUI : MonoBehaviour
             maxHeight = player.position.y;
         }
 
-        scoreText.text = $"HEIGHT : {(int)maxHeight}";
+        scoreText.text = $"SCORE : {(int)maxHeight}";
     }
 }
