@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerMove : MonoBehaviour
 {
     public float speed = 5f;
 
     [Header("Jump")]
     public float jumpForce = 6f;
-    public float gravityScale = 0.5f;
     public bool isGrounded;
 
     [Header("Death")]
@@ -22,13 +20,18 @@ public class PlayerMove : MonoBehaviour
 
     bool isDead = false;
 
-
     Rigidbody rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.useGravity = false;
+
+        // ★ Unity標準の重力を使う（重要）
+        rb.useGravity = true;
+
+        // 回転で倒れないように
+        rb.constraints = RigidbodyConstraints.FreezeRotationX |
+                         RigidbodyConstraints.FreezeRotationZ;
 
         maxHeightY = transform.position.y;
     }
@@ -37,7 +40,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (isDead)
         {
-            // ★ 死亡後 Enter でリザルト
+            // 死亡後 Enter でリザルト
             if (Input.GetKeyDown(KeyCode.Return))
             {
                 SceneManager.LoadScene("SceneResult");
@@ -45,10 +48,10 @@ public class PlayerMove : MonoBehaviour
             return;
         }
 
-        // ジャンプ
+        // ジャンプ（接地中のみ）
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            isGrounded = false; // 連続ジャンプ防止
+            isGrounded = false;
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
@@ -71,22 +74,16 @@ public class PlayerMove : MonoBehaviour
         if (isDead) return;
 
         float h = Input.GetAxis("Horizontal");
+
+        // 横移動のみ制御（Yは触らない）
         rb.velocity = new Vector3(h * speed, rb.velocity.y, rb.velocity.z);
-
-        rb.AddForce(Physics.gravity * gravityScale, ForceMode.Acceleration);
-
-        if (isGrounded && rb.velocity.y < 0)
-        {
-            rb.velocity = new Vector3(rb.velocity.x, -0.5f, rb.velocity.z);
-        }
     }
 
-    // 接地中ずっと呼ばれる
+    // 接地判定
     void OnCollisionStay(Collision collision)
     {
         if (!collision.gameObject.CompareTag("Ground")) return;
 
-        // 「下から当たっているか」をチェック
         foreach (ContactPoint contact in collision.contacts)
         {
             if (contact.normal.y > 0.5f)
@@ -97,30 +94,13 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-
-
-
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            transform.SetParent(collision.transform);
-        }
-    }
-
-
-
-
     void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            transform.SetParent(null);
             isGrounded = false;
         }
     }
-
-
 
     void Die()
     {
@@ -128,7 +108,7 @@ public class PlayerMove : MonoBehaviour
 
         isDead = true;
 
-        // ★ 高度スコア保存
+        // 高度スコア保存
         GameData.maxHeight = maxHeightY;
 
         rb.velocity = Vector3.zero;
@@ -136,34 +116,14 @@ public class PlayerMove : MonoBehaviour
 
     void LateUpdate()
     {
+        // 横ワープ処理
         Vector3 pos = transform.position;
 
         if (pos.x < leftLimitX)
-        {
             pos.x = rightLimitX;
-        }
         else if (pos.x > rightLimitX)
-        {
             pos.x = leftLimitX;
-        }
 
         transform.position = pos;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

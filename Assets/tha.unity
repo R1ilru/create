@@ -488,6 +488,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 1.85
       objectReference: {fileID: 0}
+    - target: {fileID: 4141757300648371779, guid: b726159de8a17244bb4debeb69505297, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 5dcdf0ac0e89a9d439f6d0e7cfb1f50c, type: 2}
     - target: {fileID: 4970202022835911928, guid: b726159de8a17244bb4debeb69505297, type: 3}
       propertyPath: m_Avatar
       value: 
@@ -548,6 +552,5 @@ PrefabInstance:
       propertyPath: m_Name
       value: unitychan
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8318464564549056220, guid: b726159de8a17244bb4debeb69505297, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b726159de8a17244bb4debeb69505297, type: 3}

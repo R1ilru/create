@@ -282,6 +282,10 @@ PrefabInstance:
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 13400000, guid: 5dcdf0ac0e89a9d439f6d0e7cfb1f50c, type: 2}
+    - target: {fileID: 4141757300648371779, guid: b726159de8a17244bb4debeb69505297, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4970202022835911928, guid: b726159de8a17244bb4debeb69505297, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
@@ -296,7 +300,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4970202022844895838, guid: b726159de8a17244bb4debeb69505297, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0.77
       objectReference: {fileID: 0}
     - target: {fileID: 4970202022844895838, guid: b726159de8a17244bb4debeb69505297, type: 3}
       propertyPath: m_LocalPosition.z
@@ -333,6 +337,10 @@ PrefabInstance:
     - target: {fileID: 4970202022845255294, guid: b726159de8a17244bb4debeb69505297, type: 3}
       propertyPath: m_Name
       value: unitychan
+      objectReference: {fileID: 0}
+    - target: {fileID: 6344786628671780759, guid: b726159de8a17244bb4debeb69505297, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6344786628671780759, guid: b726159de8a17244bb4debeb69505297, type: 3}
       propertyPath: moveSpeed
@@ -852,7 +860,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   jumpForce: 6
-  gravityScale: 0.5
   isGrounded: 0
   fallLimit: 5
   leftLimitX: -5
